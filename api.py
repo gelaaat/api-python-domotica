@@ -18,7 +18,7 @@ GPIO.setup(TRIG_PIN, GPIO.OUT)
 GPIO.setup(ECHO_PIN, GPIO.IN)
 
 # Declarem la url que tindrà accés a aquesta api
-allowed_origin = "http://localhost:5173"
+allowed_origin = "http://domotica-arnau-raspberry.duckdns.org"
 
 
 # Verifiquem que les peticions que arriben sigui del domini correcte
@@ -31,7 +31,7 @@ def check_origin():
 
 # Aquesta funció s'encarrega del control dels pins
 @app.route("/controlPin", methods=["GET"])
-def encender_led():
+def activar_pin():
     pin_number = request.args.get("pin")
     estat_a_posar = request.args.get("estat")
     if pin_number == "17" and estat_a_posar == "true":

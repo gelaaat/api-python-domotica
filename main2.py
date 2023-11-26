@@ -2,6 +2,11 @@ import bme680
 import time
 import psycopg2
 import sys
+import configparser
+
+# Carreguem l'arxiu de configuració
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 # Creem una instància del sensor BME680
 sensor = bme680.BME680()
@@ -17,16 +22,13 @@ sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
 time.sleep(60)
 
 # Dades de la base de dades per la seva connexió
-# Les credencials són proporcionades per el script que s'executa cada cop
-# que la raspberry fa un reboot
 DADES_DB = {
-    "host": "localhost",
-    "user": str(sys.argv[1]),
-    "password": str(sys.argv[2]),
-    "dbname": str(sys.argv[3]),
-    "port": 5432,
+    "host": config["CREDENCIALS"]["PG_HOST"],
+    "user": config["CREDENCIALS"]["PG_USER"],
+    "password": config["CREDENCIALS"]["PG_PASSWORD"],
+    "dbname": config["CREDENCIALS"]["PG_DATABASE"],
+    "port": config["CREDENCIALS"]["PG_PORT"],
 }
-
 
 try:
     # Ens connectem a la base de dades
